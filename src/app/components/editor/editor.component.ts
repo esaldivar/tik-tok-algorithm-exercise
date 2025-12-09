@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Problem } from '../../models/problem';
 import { Language, SubmissionRequest, ExecutionResult } from '../../models/execution';
-import { ApiService } from '../../services/api.service';
+import { DataService } from '../../services/data.service';
 
 declare var monaco: any;
 
@@ -28,7 +28,7 @@ export class EditorComponent implements OnInit, AfterViewInit {
   private editor: any;
   private editorLoaded = false;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
     this.loadMonacoEditor();
@@ -116,7 +116,7 @@ export class EditorComponent implements OnInit, AfterViewInit {
       }))
     };
 
-    this.apiService.runTests(submission)
+    this.dataService.runTests(submission)
       .then(result => {
         this.resultReady.emit(result.data || result as unknown as ExecutionResult);
       })
@@ -145,7 +145,7 @@ export class EditorComponent implements OnInit, AfterViewInit {
       language: this.selectedLanguage
     };
 
-    this.apiService.submitCode(submission)
+    this.dataService.submitCode(submission)
       .then(result => {
         this.resultReady.emit(result.data || result as unknown as ExecutionResult);
       })

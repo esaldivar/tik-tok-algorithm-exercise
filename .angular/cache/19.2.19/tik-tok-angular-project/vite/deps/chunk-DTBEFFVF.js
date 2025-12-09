@@ -31,6 +31,9 @@ import {
   TemplateRef,
   Version,
   ViewContainerRef,
+  __async,
+  __spreadProps,
+  __spreadValues,
   booleanAttribute,
   createNgModule,
   findLocaleData,
@@ -57,12 +60,7 @@ import {
   ɵɵinject,
   ɵɵinjectAttribute,
   ɵɵstyleProp
-} from "./chunk-UU4KTUKT.js";
-import {
-  __async,
-  __spreadProps,
-  __spreadValues
-} from "./chunk-4ULMLRGT.js";
+} from "./chunk-MHVRFEGU.js";
 
 // node_modules/@angular/common/fesm2022/dom_tokens-rA0ACyx7.mjs
 var DOCUMENT = new InjectionToken(ngDevMode ? "DocumentToken" : "");
@@ -5151,4 +5149,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-SM7HJGF2.js.map
+//# sourceMappingURL=chunk-DTBEFFVF.js.map

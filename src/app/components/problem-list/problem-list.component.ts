@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Problem } from '../../models/problem';
-import { ApiService } from '../../services/api.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-problem-list',
@@ -23,7 +23,7 @@ export class ProblemListComponent implements OnInit {
   filterText = '';
   selectedDifficulty: string | null = null;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
     this.loadProblems();
@@ -33,17 +33,17 @@ export class ProblemListComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.apiService.getProblems()
+    this.dataService.getProblems()
       .then(response => {
         if (response.success && response.data) {
           this.problems = response.data;
           this.applyFilters();
         } else {
-          this.errorMessage = response.error || 'Failed to load problems';
+          this.errorMessage = 'Failed to load problems';
         }
       })
       .catch(error => {
-        this.errorMessage = 'Error connecting to server: ' + (error.message || error);
+        this.errorMessage = 'Error loading problems: ' + (error.message || error);
         console.error('Error loading problems:', error);
       })
       .finally(() => {
