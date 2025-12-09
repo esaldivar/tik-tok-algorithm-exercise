@@ -1,0 +1,65 @@
+<div class="output-container">
+  <div *ngIf="!result" class="placeholder">
+    <p>Run code to see output here</p>
+  </div>
+
+  <div *ngIf="result" class="result">
+    <div [class]="'result-header ' + getStatusClass()">
+      <div class="status">
+        <span class="status-icon" [class.success]="result.success" [class.error]="!result.success">
+          {{ result.success ? '✓' : '✕' }}
+        </span>
+        <span class="status-text">{{ getStatusText() }}</span>
+      </div>
+      <div *ngIf="result.testResults" class="test-summary">
+        {{ getPassedCount() }} / {{ getTotalCount() }} tests passed
+      </div>
+    </div>
+
+    <div *ngIf="result.error" class="error-section">
+      <h3>Error</h3>
+      <pre class="error-message">{{ result.error }}</pre>
+    </div>
+
+    <div *ngIf="result.output && !result.error" class="output-section">
+      <h3>Output</h3>
+      <pre class="output-text">{{ result.output }}</pre>
+    </div>
+
+    <div *ngIf="result.testResults && result.testResults.length > 0" class="tests-section">
+      <h3>Test Results</h3>
+      <div class="test-cases">
+        <div *ngFor="let test of result.testResults; let i = index" [class]="'test-case ' + getTestStatusClass(test)">
+          <div class="test-header">
+            <span class="test-number">Test {{ test.testCaseIndex + 1 }}</span>
+            <span class="test-status">{{ test.passed ? 'Passed' : 'Failed' }}</span>
+          </div>
+
+          <div class="test-details">
+            <div class="test-input">
+              <label>Input:</label>
+              <pre>{{ test.input }}</pre>
+            </div>
+            <div class="test-expected">
+              <label>Expected:</label>
+              <pre>{{ test.expected }}</pre>
+            </div>
+            <div *ngIf="test.actual" class="test-actual">
+              <label>Actual:</label>
+              <pre>{{ test.actual }}</pre>
+            </div>
+            <div *ngIf="test.error && !test.passed" class="test-error">
+              <label>Error:</label>
+              <pre>{{ test.error }}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="result.executionTime !== undefined" class="metadata">
+      <span>Execution time: {{ result.executionTime }}ms</span>
+      <span *ngIf="result.memoryUsed">Memory: {{ result.memoryUsed }}MB</span>
+    </div>
+  </div>
+</div>
