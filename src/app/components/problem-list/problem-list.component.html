@@ -1,0 +1,52 @@
+<div class="problem-list-container">
+  <div class="header">
+    <h2>Problems</h2>
+  </div>
+
+  <div class="filters">
+    <input
+      type="text"
+      placeholder="Search problems..."
+      [(ngModel)]="filterText"
+      (ngModelChange)="onFilterChange()"
+      class="search-input"
+    />
+    <select [(ngModel)]="selectedDifficulty" (ngModelChange)="onFilterChange()" class="difficulty-filter">
+      <option value="">All Difficulties</option>
+      <option value="Easy">Easy</option>
+      <option value="Medium">Medium</option>
+      <option value="Hard">Hard</option>
+    </select>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+    <button (click)="loadProblems()" class="retry-btn">Retry</button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    Loading problems...
+  </div>
+
+  <div class="problems-list">
+    <div
+      *ngFor="let problem of filteredProblems"
+      (click)="selectProblem(problem)"
+      [class.selected]="selectedProblem?.id === problem.id"
+      class="problem-item"
+    >
+      <div class="problem-header">
+        <h3>{{ problem.title }}</h3>
+        <span [class]="'difficulty ' + getDifficultyColor(problem.difficulty)">
+          {{ problem.difficulty }}
+        </span>
+      </div>
+      <p class="category">{{ problem.category }}</p>
+      <p class="description">{{ problem.description }}</p>
+    </div>
+
+    <div *ngIf="filteredProblems.length === 0 && !isLoading" class="no-problems">
+      No problems found
+    </div>
+  </div>
+</div>

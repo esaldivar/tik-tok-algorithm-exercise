@@ -1,0 +1,33 @@
+<div class="editor-container">
+  <div class="editor-header">
+    <div class="language-selector">
+      <label>Language:</label>
+      <button
+        *ngFor="let lang of ['typescript', 'javascript', 'dotnet']"
+        (click)="changeLanguage($any(lang))"
+        [class.active]="selectedLanguage === lang"
+        class="lang-btn"
+        [disabled]="isRunning"
+      >
+        {{ lang === 'dotnet' ? '.NET' : lang }}
+      </button>
+    </div>
+    <div class="actions">
+      <button (click)="resetCode()" class="btn btn-secondary" [disabled]="isRunning">
+        Reset
+      </button>
+      <button (click)="runCode()" class="btn btn-primary" [disabled]="isRunning">
+        {{ isRunning ? 'Running...' : 'Run Code' }}
+      </button>
+      <button (click)="submitCode()" class="btn btn-success" [disabled]="isRunning">
+        {{ isRunning ? 'Submitting...' : 'Submit' }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoadingEditor" class="loading-editor">
+    Loading editor...
+  </div>
+
+  <div *ngIf="!isLoadingEditor" #editorContainer class="editor"></div>
+</div>

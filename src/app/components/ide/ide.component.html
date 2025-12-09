@@ -1,0 +1,61 @@
+<div class="ide-container">
+  <div class="ide-header">
+    <h1>Algorithm IDE</h1>
+    <div class="problem-info" *ngIf="selectedProblem">
+      <span class="problem-title">{{ selectedProblem.title }}</span>
+      <span [class]="'difficulty difficulty-' + selectedProblem.difficulty.toLowerCase()">
+        {{ selectedProblem.difficulty }}
+      </span>
+    </div>
+  </div>
+
+  <div class="ide-content">
+    <div class="left-panel">
+      <app-problem-list (problemSelected)="onProblemSelected($event)"></app-problem-list>
+    </div>
+
+    <div class="middle-panel">
+      <div class="problem-details" *ngIf="selectedProblem">
+        <div class="problem-description">
+          <h2>{{ selectedProblem.title }}</h2>
+          <p>{{ selectedProblem.description }}</p>
+
+          <div class="section" *ngIf="selectedProblem.constraints">
+            <h3>Constraints</h3>
+            <p>{{ selectedProblem.constraints }}</p>
+          </div>
+
+          <div class="section" *ngIf="selectedProblem.examples && selectedProblem.examples.length > 0">
+            <h3>Examples</h3>
+            <div *ngFor="let example of selectedProblem.examples; let i = index" class="example">
+              <strong>Example {{ i + 1 }}:</strong>
+              <pre>Input: {{ example.input }}</pre>
+              <pre>Output: {{ example.output }}</pre>
+              <pre *ngIf="example.explanation">Explanation: {{ example.explanation }}</pre>
+            </div>
+          </div>
+
+          <div class="section" *ngIf="selectedProblem.functionSignature">
+            <h3>Function Signature</h3>
+            <pre class="signature">{{ selectedProblem.functionSignature }}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-selection" *ngIf="!selectedProblem">
+        <p>Select a problem to get started</p>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <app-editor
+        [problem]="selectedProblem"
+        (resultReady)="onResultReady($event)"
+      ></app-editor>
+    </div>
+
+    <div class="bottom-panel">
+      <app-output [result]="executionResult"></app-output>
+    </div>
+  </div>
+</div>
